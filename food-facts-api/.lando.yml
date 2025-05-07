@@ -1,0 +1,29 @@
+name: food-facts-api
+recipe: laravel
+config:
+  webroot: ./public
+  php: '8.2'
+  composer_version: 2-latest
+  via: nginx
+  cache: redis
+  database: mysql:8.0
+  xdebug: 'develop,debug'
+services:
+  appserver_nginx:
+    scanner: false
+  database:
+    portforward: 31122
+    creds:
+      user: foodfacts
+      password: password
+      database: foodfacts
+tooling:
+  migrate:
+    service: appserver
+    cmd: php artisan migrate
+  composer:
+    service: appserver
+    cmd: composer
+  artisan:
+    service: appserver
+    cmd: php artisan
